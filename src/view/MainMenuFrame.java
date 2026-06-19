@@ -3,8 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-
-/**
+import ProjectPBO.ShiftKaryawan.src.view.KelolaKaryawan;/**
  *
  * @author Adess
  */
@@ -17,6 +16,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
      */
     public MainMenuFrame() {
         initComponents();
+        
+        button2.setLabel("KELOLA KARYAWAN");
+        button2.addActionListener(this::button2ActionPerformed);
     }
 
     /**
@@ -105,6 +107,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
         button1.setLabel("DASHBOARD");
 
         button2.setLabel("KELOLA KARYAWAN");
+        button2.addActionListener(this::button2ActionPerformed);
 
         button3.setLabel("PENGATURAN");
 
@@ -166,12 +169,21 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-      dispose();
+        dispose();
 
-LoginFrame login = new LoginFrame();
-login.setVisible(true);
-login.setLocationRelativeTo(null);  // TODO add your handling code here:
+        LoginFrame login = new LoginFrame();
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);  // TODO add your handling code here:
     }//GEN-LAST:event_button5ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+
+        KelolaKaryawan kelola = new KelolaKaryawan();
+        kelola.setVisible(true);
+        kelola.setLocationRelativeTo(null);
+    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments
