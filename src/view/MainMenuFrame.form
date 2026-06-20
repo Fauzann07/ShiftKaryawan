@@ -180,11 +180,17 @@
     </Container>
     <Component class="java.awt.Button" name="button1">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="99" red="33" type="rgb"/>
+        </Property>
         <Property name="label" type="java.lang.String" value="DASHBOARD"/>
       </Properties>
     </Component>
     <Component class="java.awt.Button" name="button2">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="label" type="java.lang.String" value="KELOLA KARYAWAN"/>
       </Properties>
       <Events>
@@ -193,16 +199,28 @@
     </Component>
     <Component class="java.awt.Button" name="button3">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="ff" red="33" type="rgb"/>
+        </Property>
         <Property name="label" type="java.lang.String" value="PENGATURAN"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button3ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Button" name="button4">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="ff" red="66" type="rgb"/>
+        </Property>
         <Property name="label" type="java.lang.String" value="ATUR SHIFT"/>
       </Properties>
     </Component>
     <Component class="java.awt.Button" name="button5">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="33" green="33" red="ff" type="rgb"/>
+        </Property>
         <Property name="label" type="java.lang.String" value="KELUAR"/>
       </Properties>
       <Events>
@@ -211,6 +229,9 @@
     </Component>
     <Component class="java.awt.Button" name="button6">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="66" red="cc" type="rgb"/>
+        </Property>
         <Property name="label" type="java.lang.String" value="LAPORAN KEHADIRAN"/>
       </Properties>
     </Component>

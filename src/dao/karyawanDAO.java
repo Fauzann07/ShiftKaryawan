@@ -66,4 +66,87 @@ public class karyawanDAO {
             return null;
         }
     }
+    
+    public boolean hapus(int id){
+
+    try{
+
+        Connection conn = DBConnection.getConnection();
+
+        PreparedStatement ps =
+                conn.prepareStatement(
+                        "DELETE FROM karyawan WHERE id=?"
+                );
+
+        ps.setInt(1, id);
+
+        ps.executeUpdate();
+
+        return true;
+
+    }catch(Exception e){
+
+        e.printStackTrace();
+        return false;
+    }
 }
+
+public boolean update(karyawan k){
+
+    try{
+
+        Connection conn = DBConnection.getConnection();
+
+        PreparedStatement ps =
+                conn.prepareStatement(
+                        """
+                        UPDATE karyawan
+                        SET nama=?,
+                            jabatan=?,
+                            jenis_kelamin=?,
+                            no_hp=?,
+                            alamat=?
+                        WHERE id=?
+                        """
+                );
+
+        ps.setString(1, k.getNama());
+        ps.setString(2, k.getJabatan());
+        ps.setString(3, k.getJenisKelamin());
+        ps.setString(4, k.getNoHp());
+        ps.setString(5, k.getAlamat());
+        ps.setInt(6, k.getId());
+
+        ps.executeUpdate();
+
+        return true;
+
+    }catch(Exception e){
+
+        e.printStackTrace();
+        return false;
+    }
+   }
+
+public ResultSet cari(String keyword) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        PreparedStatement ps =
+                conn.prepareStatement(
+                        "SELECT * FROM karyawan WHERE LOWER(nama) LIKE ?");
+
+        ps.setString(1, "%" + keyword.toLowerCase() + "%");
+
+        return ps.executeQuery();
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+        return null;
+    }
+}
+}
+

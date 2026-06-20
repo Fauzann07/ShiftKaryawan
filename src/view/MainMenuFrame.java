@@ -16,9 +16,6 @@ public class MainMenuFrame extends javax.swing.JFrame {
      */
     public MainMenuFrame() {
         initComponents();
-        
-        button2.setLabel("KELOLA KARYAWAN");
-        button2.addActionListener(this::button2ActionPerformed);
     }
 
     /**
@@ -104,18 +101,25 @@ public class MainMenuFrame extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        button1.setBackground(new java.awt.Color(51, 153, 255));
         button1.setLabel("DASHBOARD");
 
+        button2.setBackground(new java.awt.Color(255, 255, 102));
         button2.setLabel("KELOLA KARYAWAN");
         button2.addActionListener(this::button2ActionPerformed);
 
+        button3.setBackground(new java.awt.Color(51, 255, 204));
         button3.setLabel("PENGATURAN");
+        button3.addActionListener(this::button3ActionPerformed);
 
+        button4.setBackground(new java.awt.Color(102, 255, 102));
         button4.setLabel("ATUR SHIFT");
 
+        button5.setBackground(new java.awt.Color(255, 51, 51));
         button5.setLabel("KELUAR");
         button5.addActionListener(this::button5ActionPerformed);
 
+        button6.setBackground(new java.awt.Color(204, 102, 255));
         button6.setLabel("LAPORAN KEHADIRAN");
 
         jLabel6.setFont(new java.awt.Font("Trebuchet MS", 2, 14)); // NOI18N
@@ -184,6 +188,15 @@ public class MainMenuFrame extends javax.swing.JFrame {
         kelola.setVisible(true);
         kelola.setLocationRelativeTo(null);
     }//GEN-LAST:event_button2ActionPerformed
+
+    private void button3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button3ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+
+    PengaturanFrame p = new PengaturanFrame();
+    p.setVisible(true);
+    p.setLocationRelativeTo(null);
+    }//GEN-LAST:event_button3ActionPerformed
 
     /**
      * @param args the command line arguments
