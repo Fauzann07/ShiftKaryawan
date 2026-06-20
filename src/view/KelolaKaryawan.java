@@ -48,11 +48,6 @@ public class KelolaKaryawan extends javax.swing.JFrame {
 
                 card.setBackground(
                         new java.awt.Color(220, 240, 255));
-
-                jTextField1.setText(nama);
-                jTextField2.setText(jabatan);
-                jTextField3.setText(hp);
-                jTextField4.setText(alamat);
             }
         });
 
@@ -140,6 +135,7 @@ public class KelolaKaryawan extends javax.swing.JFrame {
      */
     public KelolaKaryawan() {
         initComponents();
+        loadDataKaryawan();
         
         jComboBox1.addItem("Laki-laki");
         jComboBox1.addItem("Perempuan");
@@ -157,9 +153,12 @@ public class KelolaKaryawan extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel5 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         btnkembali = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -196,17 +195,26 @@ public class KelolaKaryawan extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jLabel12.setFont(new java.awt.Font("Vladimir Script", 0, 12)); // NOI18N
+        jLabel12.setText("Employee Management System");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(46, 135, 246));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(249, 236, 204));
-        jLabel3.setText("ShiftFlow HR");
+        jPanel1.setBackground(new java.awt.Color(0, 153, 255));
 
         btnkembali.setForeground(new java.awt.Color(46, 135, 246));
         btnkembali.setText("Kembali");
         btnkembali.addActionListener(this::btnkembaliActionPerformed);
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        jLabel10.setText("Enterprise");
+
+        jLabel3.setFont(new java.awt.Font("Verdana", 1, 28)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 102, 255));
+        jLabel3.setText("HR");
+
+        jLabel13.setFont(new java.awt.Font("Vladimir Script", 0, 12)); // NOI18N
+        jLabel13.setText("Employee Management System");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -216,17 +224,27 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(btnkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(57, 57, 57))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel13)
+                .addGap(86, 86, 86))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addComponent(btnkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(249, 236, 204));
@@ -290,11 +308,8 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(4, 4, 4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,7 +354,7 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnreset)
                     .addComponent(btnhapus))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(249, 236, 204));
@@ -402,7 +417,8 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                     .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(scrollKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -434,56 +450,35 @@ public class KelolaKaryawan extends javax.swing.JFrame {
     private void btntambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntambahActionPerformed
         // TODO add your handling code here:
         String nama = jTextField1.getText();
-        String jabatan = jTextField2.getText();
-        String jk = jComboBox1.getSelectedItem().toString();
-        String hp = jTextField3.getText();
-        String alamat = jTextField4.getText();
-        
-        if (nama.isEmpty()
-                || jabatan.isEmpty()
-                || hp.isEmpty()
-                || alamat.isEmpty()) {
+    String jabatan = jTextField2.getText();
+    String jk = jComboBox1.getSelectedItem().toString();
+    String hp = jTextField3.getText();
+    String alamat = jTextField4.getText();
 
-            javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Semua data harus diisi!");
-            return;
-        }
+    model.karyawan k = new model.karyawan();
 
-        if (dataPertama) {
-            panelList.remove(jPanel2);
-            dataPertama = false;
-        }
-        
-        String id
-                = String.format("K%03d", nomorKaryawan++);
+    k.setNama(nama);
+    k.setJabatan(jabatan);
+    k.setJenisKelamin(jk);
+    k.setNoHp(hp);
+    k.setAlamat(alamat);
 
-        daftarKaryawan.add(new String[]{
-            id,
-            nama,
-            jabatan,
-            jk,
-            hp,
-            alamat
-        });
+    dao.karyawanDAO dao = new dao.karyawanDAO();
 
-        refreshDaftarKaryawan();
+    if (dao.tambah(k)) {
 
-        tambahCardKaryawan(
-                nama,
-                jabatan,
-                jk,
-                hp,
-                alamat);
-        
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Data berhasil disimpan ke PostgreSQL");
 
-        jComboBox1.setSelectedIndex(0);
+        btnresetActionPerformed(null);
 
-        jTextField1.requestFocus();
+    } else {
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Gagal menyimpan data");
+    }
     }//GEN-LAST:event_btntambahActionPerformed
 
     private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
@@ -549,12 +544,9 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                 = jComboBox1.getSelectedItem().toString();
         data[4] = jTextField3.getText();
         data[5] = jTextField4.getText();
-
+        
         refreshDaftarKaryawan();
 
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Data berhasil diubah");
     }//GEN-LAST:event_btnubahActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -563,34 +555,38 @@ public class KelolaKaryawan extends javax.swing.JFrame {
 
     private void txtcariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariKeyReleased
         // TODO add your handling code here:
-        String keyword
-                = jTextField5.getText().toLowerCase();
+        String keyword = txtcari.getText().toLowerCase().trim();
 
-        panelList.removeAll();
+    if (keyword.isEmpty()) {
+        refreshDaftarKaryawan();
+        return;
+    }
 
-        for (String[] data : daftarKaryawan) {
+    panelList.removeAll();
 
-            if (data[1].toLowerCase().contains(keyword)) {
+    for (String[] data : daftarKaryawan) {
 
-                javax.swing.JPanel card
-                        = new javax.swing.JPanel();
+        if (data[1].toLowerCase().contains(keyword)) {
 
-                javax.swing.JLabel lbl
-                        = new javax.swing.JLabel(
-                                "<html>"
-                                + "<b>ID :</b> " + data[0]
-                                + "<br>"
-                                + "<b>Nama :</b> " + data[1]
-                                + "</html>");
+            javax.swing.JPanel card = new javax.swing.JPanel();
 
-                card.add(lbl);
+            javax.swing.JLabel lbl = new javax.swing.JLabel(
+                    "<html>"
+                    + "<b>ID :</b> " + data[0]
+                    + "<br>"
+                    + "<b>Nama :</b> " + data[1]
+                    + "<br>"
+                    + "<b>Jabatan :</b> " + data[2]
+                    + "</html>");
 
-                panelList.add(card);
-            }
+            card.add(lbl);
+
+            panelList.add(card);
         }
+    }
 
-        panelList.revalidate();
-        panelList.repaint();
+    panelList.revalidate();
+    panelList.repaint();
     }//GEN-LAST:event_txtcariKeyReleased
 
     /**
@@ -617,6 +613,50 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new KelolaKaryawan().setVisible(true));
     }
+    private void loadDataKaryawan() {
+
+    panelList.removeAll();
+
+    try {
+
+        dao.karyawanDAO dao =
+                new dao.karyawanDAO();
+
+        java.sql.ResultSet rs =
+                dao.getAll();
+
+        while (rs.next()) {
+
+            javax.swing.JPanel card =
+                    new javax.swing.JPanel();
+
+            javax.swing.JLabel lbl =
+                    new javax.swing.JLabel(
+                            "<html>"
+                            + "<b>ID :</b> "
+                            + rs.getInt("id")
+                            + "<br>"
+                            + "<b>Nama :</b> "
+                            + rs.getString("nama")
+                            + "<br>"
+                            + "<b>Jabatan :</b> "
+                            + rs.getString("jabatan")
+                            + "</html>"
+                    );
+
+            card.add(lbl);
+
+            panelList.add(card);
+        }
+
+        panelList.revalidate();
+        panelList.repaint();
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnhapus;
@@ -626,7 +666,10 @@ public class KelolaKaryawan extends javax.swing.JFrame {
     private javax.swing.JButton btnubah;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

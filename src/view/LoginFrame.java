@@ -61,8 +61,6 @@ public class LoginFrame extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("SimSun", 1, 24)); // NOI18N
         jLabel5.setText("Password :");
 
-        txtPassword.setText("jPasswordField1");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
