@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
-import ProjectPBO.ShiftKaryawan.src.view.KelolaKaryawan;/**
+/**
  *
  * @author Adess
  */

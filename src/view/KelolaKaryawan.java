@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ProjectPBO.ShiftKaryawan.src.view;
+package view;
 
 /**
  *
@@ -10,13 +10,141 @@ package ProjectPBO.ShiftKaryawan.src.view;
  */
 public class KelolaKaryawan extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(KelolaKaryawan.class.getName());
+    private void tambahCardKaryawan(
+            String nama,
+            String jabatan,
+            String jk,
+            String hp,
+            String alamat) {
+
+        String id = String.format("K%03d", nomorKaryawan++);
+
+        javax.swing.JPanel card = new javax.swing.JPanel();
+        card.setBackground(new java.awt.Color(255, 255, 255));
+        card.setBorder(javax.swing.BorderFactory.createLineBorder(
+                new java.awt.Color(46, 135, 246), 2));
+
+        card.setPreferredSize(new java.awt.Dimension(350, 120));
+
+        javax.swing.JLabel lbl = new javax.swing.JLabel(
+                "<html>"
+                + "<b>ID :</b> " + id + "<br>"
+                + "<b>Nama :</b> " + nama + "<br>"
+                + "<b>Jabatan :</b> " + jabatan + "<br>"
+                + "<b>Jenis Kelamin :</b> " + jk + "<br>"
+                + "<b>No HP :</b> " + hp + "<br>"
+                + "<b>Alamat :</b> " + alamat
+                + "</html>"
+        );
+
+        card.add(lbl);
+        
+        card.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+
+                cardTerpilih = card;
+                labelTerpilih = lbl;
+
+                card.setBackground(
+                        new java.awt.Color(220, 240, 255));
+
+                jTextField1.setText(nama);
+                jTextField2.setText(jabatan);
+                jTextField3.setText(hp);
+                jTextField4.setText(alamat);
+            }
+        });
+
+        panelList.add(card);
+
+        panelList.revalidate();
+        panelList.repaint();
+    }
+    
+    private void refreshDaftarKaryawan() {
+
+        panelList.removeAll();
+
+        if (daftarKaryawan.isEmpty()) {
+
+            panelList.add(jLabel11);
+
+        } else {
+
+            for (int i = 0; i < daftarKaryawan.size(); i++) {
+
+                String[] data = daftarKaryawan.get(i);
+
+                javax.swing.JPanel card = new javax.swing.JPanel();
+
+                card.setBackground(java.awt.Color.WHITE);
+
+                card.setBorder(
+                        javax.swing.BorderFactory.createLineBorder(
+                                new java.awt.Color(46, 135, 246), 2));
+
+                javax.swing.JLabel lbl
+                        = new javax.swing.JLabel(
+                                "<html>"
+                                + "<b>ID :</b> " + data[0] + "<br>"
+                                + "<b>Nama :</b> " + data[1] + "<br>"
+                                + "<b>Jabatan :</b> " + data[2] + "<br>"
+                                + "<b>No HP :</b> " + data[4]
+                                + "</html>");
+
+                card.add(lbl);
+
+                final int idx = i;
+
+                card.addMouseListener(
+                        new java.awt.event.MouseAdapter() {
+
+                    @Override
+                    public void mouseClicked(
+                            java.awt.event.MouseEvent e) {
+
+                        indexDipilih = idx;
+
+                        jTextField1.setText(data[1]);
+                        jTextField2.setText(data[2]);
+                        jComboBox1.setSelectedItem(data[3]);
+                        jTextField3.setText(data[4]);
+                        jTextField4.setText(data[5]);
+                    }
+                });
+
+                panelList.add(card);
+            }
+        }
+
+        panelList.revalidate();
+        panelList.repaint();
+    }
+    
+    private int nomorKaryawan = 1;
+    private boolean dataPertama = true;
+    private java.util.ArrayList<String[]> daftarKaryawan
+            = new java.util.ArrayList<>();
+
+    private int indexDipilih = -1;
+    
+    private javax.swing.JPanel cardTerpilih = null;
+    private javax.swing.JLabel labelTerpilih = null;
+    
+    private static final java.util.logging.Logger logger = 
+            java.util.logging.Logger.getLogger(KelolaKaryawan.class.getName());
 
     /**
      * Creates new form KelolaKaryawan
      */
     public KelolaKaryawan() {
         initComponents();
+        
+        jComboBox1.addItem("Laki-laki");
+        jComboBox1.addItem("Perempuan");
+        
+        
     }
 
     /**
@@ -31,7 +159,7 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnkembali = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -44,18 +172,17 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btntambah = new javax.swing.JButton();
+        btnubah = new javax.swing.JButton();
+        btnhapus = new javax.swing.JButton();
+        btnreset = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtcari = new javax.swing.JTextField();
         scrollKaryawan = new javax.swing.JScrollPane();
         panelList = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -77,8 +204,9 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(249, 236, 204));
         jLabel3.setText("ShiftFlow HR");
 
-        jButton1.setForeground(new java.awt.Color(46, 135, 246));
-        jButton1.setText("Kembali");
+        btnkembali.setForeground(new java.awt.Color(46, 135, 246));
+        btnkembali.setText("Kembali");
+        btnkembali.addActionListener(this::btnkembaliActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,7 +214,7 @@ public class KelolaKaryawan extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(57, 57, 57))
@@ -96,7 +224,7 @@ public class KelolaKaryawan extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -117,21 +245,27 @@ public class KelolaKaryawan extends javax.swing.JFrame {
 
         jLabel7.setText("Alamat               :");
 
-        jButton2.setBackground(new java.awt.Color(243, 92, 43));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Tambah");
+        jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(46, 135, 246));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Ubah");
+        btntambah.setBackground(new java.awt.Color(243, 92, 43));
+        btntambah.setForeground(new java.awt.Color(255, 255, 255));
+        btntambah.setText("Tambah");
+        btntambah.addActionListener(this::btntambahActionPerformed);
 
-        jButton4.setBackground(new java.awt.Color(220, 38, 38));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Hapus");
+        btnubah.setBackground(new java.awt.Color(46, 135, 246));
+        btnubah.setForeground(new java.awt.Color(255, 255, 255));
+        btnubah.setText("Ubah");
+        btnubah.addActionListener(this::btnubahActionPerformed);
 
-        jButton5.setBackground(new java.awt.Color(209, 213, 219));
-        jButton5.setForeground(new java.awt.Color(45, 45, 45));
-        jButton5.setText("Reset");
+        btnhapus.setBackground(new java.awt.Color(220, 38, 38));
+        btnhapus.setForeground(new java.awt.Color(255, 255, 255));
+        btnhapus.setText("Hapus");
+        btnhapus.addActionListener(this::btnhapusActionPerformed);
+
+        btnreset.setBackground(new java.awt.Color(209, 213, 219));
+        btnreset.setForeground(new java.awt.Color(45, 45, 45));
+        btnreset.setText("Reset");
+        btnreset.addActionListener(this::btnresetActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -140,10 +274,13 @@ public class KelolaKaryawan extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(90, 90, 90)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton4)))
+                            .addComponent(btntambah)
+                            .addComponent(btnhapus)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -158,24 +295,15 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addGap(30, 30, 30)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton5)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(1, 1, 1)))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnubah)
+                            .addComponent(btnreset)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -205,13 +333,13 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
+                    .addComponent(btnubah)
+                    .addComponent(btntambah))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnreset)
+                    .addComponent(btnhapus))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(249, 236, 204));
@@ -224,43 +352,24 @@ public class KelolaKaryawan extends javax.swing.JFrame {
 
         jLabel9.setText("Cari Karyawan   :");
 
+        txtcari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtcariKeyReleased(evt);
+            }
+        });
+
         scrollKaryawan.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollKaryawan.setToolTipText("scrollKaryawan");
         scrollKaryawan.setViewportBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         panelList.setLayout(new javax.swing.BoxLayout(panelList, javax.swing.BoxLayout.LINE_AXIS));
 
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Belum ada data karyawan ");
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
+        panelList.add(jPanel2);
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText(" Tambahkan data pertama untuk memulai ");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addComponent(jLabel10))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel11)))
-                .addContainerGap(127, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
-        );
-
-        panelList.add(jPanel2);
+        jLabel11.setText("Belum ada data karyawan");
+        panelList.add(jLabel11);
 
         scrollKaryawan.setViewportView(panelList);
 
@@ -271,17 +380,17 @@ public class KelolaKaryawan extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(scrollKaryawan, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 29, Short.MAX_VALUE)))
+                        .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
-                .addGap(65, 65, 65))
+                .addGap(104, 104, 104))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,7 +399,7 @@ public class KelolaKaryawan extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcari, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -322,6 +431,168 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btntambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntambahActionPerformed
+        // TODO add your handling code here:
+        String nama = jTextField1.getText();
+        String jabatan = jTextField2.getText();
+        String jk = jComboBox1.getSelectedItem().toString();
+        String hp = jTextField3.getText();
+        String alamat = jTextField4.getText();
+        
+        if (nama.isEmpty()
+                || jabatan.isEmpty()
+                || hp.isEmpty()
+                || alamat.isEmpty()) {
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Semua data harus diisi!");
+            return;
+        }
+
+        if (dataPertama) {
+            panelList.remove(jPanel2);
+            dataPertama = false;
+        }
+        
+        String id
+                = String.format("K%03d", nomorKaryawan++);
+
+        daftarKaryawan.add(new String[]{
+            id,
+            nama,
+            jabatan,
+            jk,
+            hp,
+            alamat
+        });
+
+        refreshDaftarKaryawan();
+
+        tambahCardKaryawan(
+                nama,
+                jabatan,
+                jk,
+                hp,
+                alamat);
+        
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+
+        jComboBox1.setSelectedIndex(0);
+
+        jTextField1.requestFocus();
+    }//GEN-LAST:event_btntambahActionPerformed
+
+    private void btnresetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnresetActionPerformed
+        // TODO add your handling code here:
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+
+        jComboBox1.setSelectedIndex(0);
+
+        indexDipilih = -1;
+    }//GEN-LAST:event_btnresetActionPerformed
+
+    private void btnkembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnkembaliActionPerformed
+        // TODO add your handling code here:
+        dispose();
+
+        MainMenuFrame menu = new MainMenuFrame();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnkembaliActionPerformed
+
+    private void btnhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhapusActionPerformed
+        // TODO add your handling code here:
+        if (indexDipilih == -1) {
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Pilih data dulu!");
+
+            return;
+        }
+
+        daftarKaryawan.remove(indexDipilih);
+
+        indexDipilih = -1;
+
+        refreshDaftarKaryawan();
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Data berhasil dihapus");
+    }//GEN-LAST:event_btnhapusActionPerformed
+
+    private void btnubahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnubahActionPerformed
+        // TODO add your handling code here:
+        if (indexDipilih == -1) {
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Pilih data dulu!");
+
+            return;
+        }
+
+        String[] data
+                = daftarKaryawan.get(indexDipilih);
+
+        data[1] = jTextField1.getText();
+        data[2] = jTextField2.getText();
+        data[3]
+                = jComboBox1.getSelectedItem().toString();
+        data[4] = jTextField3.getText();
+        data[5] = jTextField4.getText();
+
+        refreshDaftarKaryawan();
+
+        javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Data berhasil diubah");
+    }//GEN-LAST:event_btnubahActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void txtcariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcariKeyReleased
+        // TODO add your handling code here:
+        String keyword
+                = jTextField5.getText().toLowerCase();
+
+        panelList.removeAll();
+
+        for (String[] data : daftarKaryawan) {
+
+            if (data[1].toLowerCase().contains(keyword)) {
+
+                javax.swing.JPanel card
+                        = new javax.swing.JPanel();
+
+                javax.swing.JLabel lbl
+                        = new javax.swing.JLabel(
+                                "<html>"
+                                + "<b>ID :</b> " + data[0]
+                                + "<br>"
+                                + "<b>Nama :</b> " + data[1]
+                                + "</html>");
+
+                card.add(lbl);
+
+                panelList.add(card);
+            }
+        }
+
+        panelList.revalidate();
+        panelList.repaint();
+    }//GEN-LAST:event_txtcariKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -348,14 +619,13 @@ public class KelolaKaryawan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnhapus;
+    private javax.swing.JButton btnkembali;
+    private javax.swing.JButton btnreset;
+    private javax.swing.JButton btntambah;
+    private javax.swing.JButton btnubah;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -374,8 +644,8 @@ public class KelolaKaryawan extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JPanel panelList;
     private javax.swing.JScrollPane scrollKaryawan;
+    private javax.swing.JTextField txtcari;
     // End of variables declaration//GEN-END:variables
 }
