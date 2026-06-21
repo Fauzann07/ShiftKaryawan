@@ -34,7 +34,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        Breturn = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         editPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -42,12 +42,12 @@ public class AturShiftFrame extends javax.swing.JFrame {
         LnamaKaryawan = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cbShift = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        BcancelEdit = new javax.swing.JButton();
+        BsaveEdit = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         LtanggalKerja = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablePane = new javax.swing.JScrollPane();
+        tabel = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
 
@@ -73,8 +73,8 @@ public class AturShiftFrame extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Vladimir Script", 0, 12)); // NOI18N
         jLabel13.setText("Employee Management System");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton3.setText("KEMBALI");
+        Breturn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        Breturn.setText("KEMBALI");
 
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
@@ -82,7 +82,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
@@ -101,7 +101,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel2)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addGap(0, 15, Short.MAX_VALUE))
@@ -125,15 +125,15 @@ public class AturShiftFrame extends javax.swing.JFrame {
 
         cbShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setBackground(new java.awt.Color(249, 70, 70));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("BATAL");
+        BcancelEdit.setBackground(new java.awt.Color(249, 70, 70));
+        BcancelEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BcancelEdit.setForeground(new java.awt.Color(255, 255, 255));
+        BcancelEdit.setText("BATAL");
 
-        jButton2.setBackground(new java.awt.Color(60, 213, 60));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("SIMPAN");
+        BsaveEdit.setBackground(new java.awt.Color(60, 213, 60));
+        BsaveEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BsaveEdit.setForeground(new java.awt.Color(255, 255, 255));
+        BsaveEdit.setText("SIMPAN");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Tanggal :");
@@ -164,14 +164,14 @@ public class AturShiftFrame extends javax.swing.JFrame {
                             .addGap(26, 26, 26)
                             .addComponent(LtanggalKerja)))
                     .addGroup(editPanelLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(BcancelEdit)
                         .addGap(109, 109, 109)))
                 .addContainerGap(55, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(BsaveEdit)
                         .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -196,12 +196,12 @@ public class AturShiftFrame extends javax.swing.JFrame {
                     .addComponent(cbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BcancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BsaveEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -220,7 +220,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tablePane.setViewportView(tabel);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel11.setText("Atur");
@@ -237,7 +237,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addComponent(jLabel11)
@@ -254,7 +254,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
@@ -309,14 +309,14 @@ public class AturShiftFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BcancelEdit;
+    private javax.swing.JButton Breturn;
+    private javax.swing.JButton BsaveEdit;
     private javax.swing.JLabel LnamaKaryawan;
     private javax.swing.JLabel LtanggalKerja;
     private javax.swing.JComboBox<String> cbShift;
     private javax.swing.JPanel editPanel;
     private javax.swing.JPanel headerPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -328,8 +328,8 @@ public class AturShiftFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTable tabel;
+    private javax.swing.JScrollPane tablePane;
     // End of variables declaration//GEN-END:variables
 }
