@@ -4,6 +4,8 @@
  */
 package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
 
+import view.MainMenuFrame;
+
 /**
  *
  * @author O'Jean
@@ -75,6 +77,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
 
         Breturn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         Breturn.setText("KEMBALI");
+        Breturn.addActionListener(this::BreturnActionPerformed);
 
         javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
         headerPanel.setLayout(headerPanelLayout);
@@ -165,8 +168,8 @@ public class AturShiftFrame extends javax.swing.JFrame {
                             .addComponent(LtanggalKerja)))
                     .addGroup(editPanelLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel1)
-                        .addGap(97, 97, 97))))
+                        .addComponent(jLabel1)))
+                .addGap(63, 63, 63))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(BcancelEdit)
@@ -285,6 +288,15 @@ public class AturShiftFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BreturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BreturnActionPerformed
+        // TODO add your handling code here:
+        MainMenuFrame menu = new MainMenuFrame();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+
+        dispose();
+    }//GEN-LAST:event_BreturnActionPerformed
 
     /**
      * @param args the command line arguments

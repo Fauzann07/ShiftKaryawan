@@ -4,6 +4,9 @@
  */
 package view;
 
+import pemrogramanberbasisobjek.ShiftKaryawan.src.view.AturShiftFrame;
+import pemrogramanberbasisobjek.ShiftKaryawan.src.view.LaporanKehadiranFrame;
+
 /**
  *
  * @author O'Jean
@@ -55,9 +58,9 @@ public class DashboardFrame extends javax.swing.JFrame {
         LtotalTelat3 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAturShift = new javax.swing.JButton();
+        btnKelolaKaryawan = new javax.swing.JButton();
+        btnLaporanKehadiran = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -331,21 +334,23 @@ public class DashboardFrame extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setText("Pintasan Cepat :");
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Kelola Karyawan");
+        btnAturShift.setBackground(new java.awt.Color(0, 153, 255));
+        btnAturShift.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAturShift.setForeground(new java.awt.Color(255, 255, 255));
+        btnAturShift.setText("Atur Shift");
+        btnAturShift.addActionListener(this::btnAturShiftActionPerformed);
 
-        jButton2.setBackground(new java.awt.Color(0, 153, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Atur Shift");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnKelolaKaryawan.setBackground(new java.awt.Color(0, 153, 255));
+        btnKelolaKaryawan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnKelolaKaryawan.setForeground(new java.awt.Color(255, 255, 255));
+        btnKelolaKaryawan.setText("Kelola Karyawan");
+        btnKelolaKaryawan.addActionListener(this::btnKelolaKaryawanActionPerformed);
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 255));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Laporan Kehadiran");
+        btnLaporanKehadiran.setBackground(new java.awt.Color(0, 153, 255));
+        btnLaporanKehadiran.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLaporanKehadiran.setForeground(new java.awt.Color(255, 255, 255));
+        btnLaporanKehadiran.setText("Laporan Kehadiran");
+        btnLaporanKehadiran.addActionListener(this::btnLaporanKehadiranActionPerformed);
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("Status Karyawan Hari ini");
@@ -382,11 +387,11 @@ public class DashboardFrame extends javax.swing.JFrame {
                             .addGroup(mainPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
+                                .addComponent(btnKelolaKaryawan)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
+                                .addComponent(btnAturShift)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3))
+                                .addComponent(btnLaporanKehadiran))
                             .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(mainPanelLayout.createSequentialGroup()
                                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -425,10 +430,10 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnKelolaKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAturShift, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLaporanKehadiran, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -461,9 +466,14 @@ public class DashboardFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAturShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAturShiftActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        AturShiftFrame menu = new AturShiftFrame();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+
+        dispose();
+    }//GEN-LAST:event_btnAturShiftActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         // TODO add your handling code here:
@@ -473,6 +483,24 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void btnKelolaKaryawanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKelolaKaryawanActionPerformed
+        // TODO add your handling code here:
+        KelolaKaryawan menu = new KelolaKaryawan();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+
+        dispose();
+    }//GEN-LAST:event_btnKelolaKaryawanActionPerformed
+
+    private void btnLaporanKehadiranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanKehadiranActionPerformed
+        // TODO add your handling code here:
+        LaporanKehadiranFrame menu = new LaporanKehadiranFrame();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+
+        dispose();
+    }//GEN-LAST:event_btnLaporanKehadiranActionPerformed
 
     /**
      * @param args the command line arguments
@@ -505,11 +533,11 @@ public class DashboardFrame extends javax.swing.JFrame {
     private javax.swing.JLabel LtotalTelat;
     private javax.swing.JLabel LtotalTelat1;
     private javax.swing.JLabel LtotalTelat3;
+    private javax.swing.JButton btnAturShift;
+    private javax.swing.JButton btnKelolaKaryawan;
     private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnLaporanKehadiran;
     private javax.swing.JPanel headerPanel1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
