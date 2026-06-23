@@ -4,6 +4,8 @@
  */
 package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
 
+import view.MainMenuFrame;
+
 /**
  *
  * @author O'Jean
@@ -37,7 +39,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        Breturn1 = new javax.swing.JButton();
+        btnKembali = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -127,8 +129,9 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Vladimir Script", 0, 12)); // NOI18N
         jLabel14.setText("Employee Management System");
 
-        Breturn1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        Breturn1.setText("KEMBALI");
+        btnKembali.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnKembali.setText("KEMBALI");
+        btnKembali.addActionListener(this::btnKembaliActionPerformed);
 
         javax.swing.GroupLayout headerPanel1Layout = new javax.swing.GroupLayout(headerPanel1);
         headerPanel1.setLayout(headerPanel1Layout);
@@ -138,7 +141,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(headerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanel1Layout.createSequentialGroup()
-                        .addComponent(Breturn1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 590, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,7 +158,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
                 .addGroup(headerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel3)
-                    .addComponent(Breturn1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addGap(0, 14, Short.MAX_VALUE))
@@ -466,6 +469,15 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        // TODO add your handling code here:
+        MainMenuFrame menu = new MainMenuFrame();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+
+        dispose();
+    }//GEN-LAST:event_btnKembaliActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -493,7 +505,6 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Breturn;
-    private javax.swing.JButton Breturn1;
     private javax.swing.JLabel LtotalAlpa;
     private javax.swing.JLabel LtotalCuti;
     private javax.swing.JLabel LtotalHadir;
@@ -501,6 +512,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
     private javax.swing.JLabel LtotalHadir4;
     private javax.swing.JLabel LtotalHadir5;
     private javax.swing.JLabel LtotalTelat;
+    private javax.swing.JButton btnKembali;
     private javax.swing.JPanel headerPanel;
     private javax.swing.JPanel headerPanel1;
     private javax.swing.JComboBox<String> jComboBox1;

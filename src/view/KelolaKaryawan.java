@@ -552,8 +552,8 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         return;
     }
 
-    model.karyawan k =
-            new model.karyawan();
+    model.karyawan k;
+        k = new model.karyawan();
 
     k.setId(selectedId);
     k.setNama(jTextField1.getText());

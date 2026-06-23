@@ -6,20 +6,93 @@ package view;
 
 import pemrogramanberbasisobjek.ShiftKaryawan.src.view.AturShiftFrame;
 import pemrogramanberbasisobjek.ShiftKaryawan.src.view.LaporanKehadiranFrame;
+import javax.swing.table.DefaultTableModel;
+import dao.ShiftDAO;
+import model.karyawan;
+import java.util.List;
+import model.Shift;
 
 /**
  *
  * @author O'Jean
  */
+
+
 public class DashboardFrame extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DashboardFrame.class.getName());
+    private void updateCardStats() {
 
-    /**
-     * Creates new form DashboardFrame
-     */
+        int total = model.getRowCount();
+
+        int pagi = 0;
+        int siang = 0;
+        int malam = 0;
+        int bekerja = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+
+            String shift = model.getValueAt(i, 2).toString(); // Jabatan atau shift (tergantung data kamu)
+            String status = model.getValueAt(i, 5).toString();
+
+            // contoh logic SHIFT (sementara pakai jabatan/shift dummy)
+            if (shift.equalsIgnoreCase("Admin")) {
+                pagi++;
+            } else if (shift.equalsIgnoreCase("Kasir")) {
+                siang++;
+            } else {
+                malam++;
+            }
+
+            if (status.equalsIgnoreCase("Aktif")) {
+                bekerja++;
+            }
+        }
+
+        LtotalKaryawan1.setText(String.valueOf(total));
+        LsudahAbsen.setText(String.valueOf(pagi));
+        LtotalTelat.setText(String.valueOf(siang));
+        LtotalTelat1.setText(String.valueOf(malam));
+        LtotalTelat3.setText(String.valueOf(bekerja));
+    }
+    
+    private void loadData() {
+
+        model.setRowCount(0);
+
+        ShiftDAO dao = new ShiftDAO();
+        List<Shift> list = dao.getAllKaryawanHariIni();
+
+        int no = 1;
+        for (Shift k : list) {
+            model.addRow(new Object[]{
+                no++,
+                k.getNama(),
+                k.getJabatan(),
+                k.getJamMasuk(),
+                k.getJamKeluar(),
+                k.getStatus()
+            });
+        }
+    }
+
+    private final DefaultTableModel model;
+    private static final java.util.logging.Logger logger
+            = java.util.logging.Logger.getLogger(DashboardFrame.class.getName());
+
     public DashboardFrame() {
         initComponents();
+        model = new DefaultTableModel();
+        jTable1.setModel(model);
+
+        model.addColumn("No");
+        model.addColumn("Nama");
+        model.addColumn("Jabatan");
+        model.addColumn("Jam Masuk");
+        model.addColumn("Jam Keluar");
+        model.addColumn("Status");
+
+        loadData();
+        updateCardStats();
     }
 
     /**
@@ -62,7 +135,7 @@ public class DashboardFrame extends javax.swing.JFrame {
         btnKelolaKaryawan = new javax.swing.JButton();
         btnLaporanKehadiran = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnrefresh = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -355,8 +428,8 @@ public class DashboardFrame extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("Status Karyawan Hari ini");
 
-        jButton4.setText("Refresh");
-        jButton4.addActionListener(this::jButton4ActionPerformed);
+        btnrefresh.setText("Refresh");
+        btnrefresh.addActionListener(this::btnrefreshActionPerformed);
 
         jTable1.setBackground(new java.awt.Color(0, 153, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -396,7 +469,7 @@ public class DashboardFrame extends javax.swing.JFrame {
                                 .addGroup(mainPanelLayout.createSequentialGroup()
                                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(343, 343, 343)
-                                    .addComponent(jButton4)
+                                    .addComponent(btnrefresh)
                                     .addGap(20, 20, 20))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainPanelLayout.createSequentialGroup()
@@ -423,9 +496,9 @@ public class DashboardFrame extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18)
-                    .addComponent(jButton4))
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnrefresh)
+                    .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -462,9 +535,11 @@ public class DashboardFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnrefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnrefreshActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        loadData();
+        updateCardStats();
+    }//GEN-LAST:event_btnrefreshActionPerformed
 
     private void btnAturShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAturShiftActionPerformed
         // TODO add your handling code here:
@@ -537,8 +612,8 @@ public class DashboardFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnKelolaKaryawan;
     private javax.swing.JButton btnKembali;
     private javax.swing.JButton btnLaporanKehadiran;
+    private javax.swing.JButton btnrefresh;
     private javax.swing.JPanel headerPanel1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
