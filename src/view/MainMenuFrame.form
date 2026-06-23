@@ -27,7 +27,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="button1" max="32767" attributes="0"/>
+                  <Component id="btndashboard" max="32767" attributes="0"/>
                   <Component id="button6" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -59,7 +59,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="button4" min="-2" pref="99" max="-2" attributes="0"/>
                   <Component id="button2" min="-2" pref="99" max="-2" attributes="0"/>
-                  <Component id="button1" min="-2" pref="99" max="-2" attributes="0"/>
+                  <Component id="btndashboard" min="-2" pref="99" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="34" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -178,13 +178,16 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="java.awt.Button" name="button1">
+    <Component class="java.awt.Button" name="btndashboard">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="33" type="rgb"/>
         </Property>
         <Property name="label" type="java.lang.String" value="DASHBOARD"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btndashboardActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Button" name="button2">
       <Properties>
