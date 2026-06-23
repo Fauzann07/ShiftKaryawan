@@ -156,7 +156,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Nama", "Title 3", "Title 4", "Title 5", "Title 6"
+                "No", "Nama Karyawan", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ) {
             Class[] types = new Class [] {
@@ -359,7 +359,9 @@ public class AturShiftFrame extends javax.swing.JFrame {
             Object dataSel = tabel.getValueAt(barisTerpilih,1);
             
             if(dataSel == null || dataSel.toString().trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Nama Karyawan masih kosong!","Info",JOptionPane.INFORMATION_MESSAGE);
                 LnamaKaryawan.setText("Belum dipilih");
+                LtanggalKerja.setText("Belum dipilih");
                 cbShift.removeAllItems();
                 cbShift.addItem("Belum dipilih");
             }else{
@@ -372,18 +374,12 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 cbShift.addItem("Malam");
                 
                 if(kolomTerpilih > 1){
+                int selisihHari = kolomTerpilih - 2;
+                LocalDate tanggalTarget = LocalDate.now().plusDays(selisihHari);
                     
-                Object cekNama = tabel.getValueAt(barisTerpilih, 1);
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd MMMM yyyy", new java.util.Locale("id"));
+                LtanggalKerja.setText(tanggalTarget.format(formatter));
                 
-                if (cekNama == null || cekNama.toString().trim().isEmpty()){
-                    LtanggalKerja.setText("Belum dipilih");
-                }else{
-                    int selisihHari = kolomTerpilih - 2;
-                    LocalDate tanggalTarget = LocalDate.now().plusDays(selisihHari);
-                    
-                    java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd MMMM yyyy", new java.util.Locale("id"));
-                    LtanggalKerja.setText(tanggalTarget.format(formatter));
-                }
                 }else{
                     LtanggalKerja.setText("Belum dipilih");
                 }

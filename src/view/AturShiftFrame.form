@@ -214,7 +214,7 @@
                       <Data value="1"/>
                       <Data value="null"/>
                     </Column>
-                    <Column editable="false" title="Nama" type="java.lang.String">
+                    <Column editable="false" title="Nama Karyawan" type="java.lang.String">
                       <Data value="Sigma"/>
                       <Data value="null"/>
                     </Column>
