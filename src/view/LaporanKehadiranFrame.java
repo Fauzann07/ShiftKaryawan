@@ -6,6 +6,9 @@ package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
 
 import view.MainMenuFrame;
 
+import javax.swing.*;
+import javax.swing.table.*;
+
 /**
  *
  * @author O'Jean
@@ -17,8 +20,36 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
     /**
      * Creates new form LaporanKehadiranFrame
      */
+    private void updateTabel(){
+        DefaultTableModel tabelModel = (DefaultTableModel)tabel.getModel();
+        int jumlahBaris = tabelModel.getRowCount();
+        
+        int totalCuti = 0;
+        int totalIzin = 0;
+        int totalAlpa = 0;
+        int totalTelat = 0;
+        
+        for (int i = 0; i < jumlahBaris; i++){
+            
+            if (tabelModel.getValueAt(i,5) != null){
+                totalCuti += Integer.parseInt(tabelModel.getValueAt(i,5).toString());  
+            }
+            if (tabelModel.getValueAt(i,6)!= null){
+                totalAlpa += Integer.parseInt(tabelModel.getValueAt(i,6).toString());
+            }
+            if(tabelModel.getValueAt(i, 7)!= null){
+                totalTelat += Integer.parseInt(tabelModel.getValueAt(i,7).toString());
+            } 
+        }
+        LtotalCuti.setText(String.valueOf(totalCuti));
+        LtotalAlpa.setText(String.valueOf(totalAlpa));
+        LtotalTelat.setText(String.valueOf(totalTelat));
+    }
+    
     public LaporanKehadiranFrame() {
         initComponents();
+        updateTabel();
+        
     }
 
     /**
@@ -42,7 +73,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
         btnKembali = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabel = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -166,12 +197,11 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 255)));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 { new Integer(1), "James", "Gali Kuburan",  new Integer(50),  new Integer(5),  new Integer(3),  new Integer(0),  new Integer(0),  new Integer(0), "Bagus"},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
+                { new Integer(2), "Leclerc", "Pembalap",  new Integer(20),  new Integer(10),  new Integer(5),  new Integer(5),  new Integer(10),  new Integer(0), "Kurang Bagus"},
+                { new Integer(3), "Lando", "Pembalap",  new Integer(30),  new Integer(0),  new Integer(2),  new Integer(2),  new Integer(5),  new Integer(10), null},
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
@@ -193,7 +223,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabel);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -538,7 +568,7 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }
