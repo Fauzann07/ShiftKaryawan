@@ -4,7 +4,9 @@
  */
 package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
 
+import javax.swing.*;
 import view.MainMenuFrame;
+import javax.swing.table.*;
 
 /**
  *
@@ -19,6 +21,13 @@ public class AturShiftFrame extends javax.swing.JFrame {
      */
     public AturShiftFrame() {
         initComponents();
+        
+        cbShift.removeAllItems();
+        
+        tabel.getColumnModel().getColumn(0).setPreferredWidth(15);
+        tabel.getColumnModel().getColumn(1).setPreferredWidth(50);
+        tabel.getColumnModel().getColumn(2).setPreferredWidth(25);
+        tabel.getColumnModel().getColumn(3).setPreferredWidth(25);
     }
 
     /**
@@ -84,30 +93,35 @@ public class AturShiftFrame extends javax.swing.JFrame {
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13)
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addGap(39, 39, 39))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(74, 74, 74))))
+                        .addComponent(jLabel7)))
+                .addGap(60, 60, 60))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel2)
-                    .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(headerPanelLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13)))
+                .addGap(0, 27, Short.MAX_VALUE))
         );
 
         editPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -127,8 +141,6 @@ public class AturShiftFrame extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Tipe Shift :");
 
-        cbShift.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         BcancelEdit.setBackground(new java.awt.Color(249, 70, 70));
         BcancelEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         BcancelEdit.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,6 +150,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
         BsaveEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         BsaveEdit.setForeground(new java.awt.Color(255, 255, 255));
         BsaveEdit.setText("SIMPAN");
+        BsaveEdit.addActionListener(this::BsaveEditActionPerformed);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Tanggal :");
@@ -204,8 +217,6 @@ public class AturShiftFrame extends javax.swing.JFrame {
         tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 { new Integer(1), "Sigma", "CEO", "Malam"},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -227,7 +238,18 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelMouseClicked(evt);
+            }
+        });
         tablePane.setViewportView(tabel);
+        if (tabel.getColumnModel().getColumnCount() > 0) {
+            tabel.getColumnModel().getColumn(0).setResizable(false);
+            tabel.getColumnModel().getColumn(1).setResizable(false);
+            tabel.getColumnModel().getColumn(2).setResizable(false);
+            tabel.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 153, 255));
@@ -245,16 +267,16 @@ public class AturShiftFrame extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addContainerGap()
+                        .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(editPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -297,6 +319,36 @@ public class AturShiftFrame extends javax.swing.JFrame {
 
         dispose();
     }//GEN-LAST:event_BreturnActionPerformed
+
+    private void tabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMouseClicked
+        // TODO add your handling code here:
+        int barisTerpilih = tabel.getSelectedRow();
+        
+        if (barisTerpilih != -1){
+            String namaKaryawan = tabel.getValueAt(barisTerpilih, 1).toString();
+            LnamaKaryawan.setText(namaKaryawan);
+            cbShift.removeAllItems();
+            
+            cbShift.addItem("Pilih Shift...");
+            cbShift.addItem("Pagi");
+            cbShift.addItem("Malam");
+        }
+    }//GEN-LAST:event_tabelMouseClicked
+
+    private void BsaveEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BsaveEditActionPerformed
+        // TODO add your handling code here:
+        if (LnamaKaryawan.getText() == "Belum dipilih"){
+            JOptionPane.showMessageDialog(this, "Pilih karyawan dulu","Info",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }else{
+            int barisTerpilih = tabel.getSelectedRow();
+            String shiftKerja = cbShift.getSelectedItem().toString();
+            
+            DefaultTableModel tabelModel = (DefaultTableModel) tabel.getModel();
+            tabelModel.setValueAt(shiftKerja, barisTerpilih, 3);
+            
+        }
+    }//GEN-LAST:event_BsaveEditActionPerformed
 
     /**
      * @param args the command line arguments
