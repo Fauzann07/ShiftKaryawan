@@ -7,6 +7,9 @@ package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
 import javax.swing.*;
 import view.MainMenuFrame;
 import javax.swing.table.*;
+import java.time.*;
+import java.time.format.*;
+import java.util.*;
 
 /**
  *
@@ -19,15 +22,39 @@ public class AturShiftFrame extends javax.swing.JFrame {
     /**
      * Creates new form AturShiftFrame
      */
+    private void setKolomHari(){
+        LocalDate hariIni = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE", new Locale("id"));
+        TableColumnModel kolomModel = tabel.getColumnModel();
+        int totalKolom = kolomModel.getColumnCount();
+        
+        int skip = 0;
+        
+        for (int i= 2; i < totalKolom; i++){
+            LocalDate tanggalKolom = hariIni.plusDays(skip);
+            
+            if(tanggalKolom.getDayOfWeek()==java.time.DayOfWeek.SUNDAY){
+                skip++;
+                tanggalKolom = hariIni.plusDays(skip);
+            }
+            
+            String barisBaru = tanggalKolom.format(formatter);
+            kolomModel.getColumn(i).setHeaderValue(barisBaru);
+            skip++;
+        }
+        tabel.getTableHeader().repaint();
+    }
+    
     public AturShiftFrame() {
         initComponents();
+        setKolomHari();
         
         cbShift.removeAllItems();
         
-        tabel.getColumnModel().getColumn(0).setPreferredWidth(15);
-        tabel.getColumnModel().getColumn(1).setPreferredWidth(50);
-        tabel.getColumnModel().getColumn(2).setPreferredWidth(25);
-        tabel.getColumnModel().getColumn(3).setPreferredWidth(25);
+//        tabel.getColumnModel().getColumn(0).setPreferredWidth(15);
+//        tabel.getColumnModel().getColumn(1).setPreferredWidth(50);
+//        tabel.getColumnModel().getColumn(2).setPreferredWidth(25);
+//        tabel.getColumnModel().getColumn(3).setPreferredWidth(25);
     }
 
     /**
@@ -47,6 +74,10 @@ public class AturShiftFrame extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         Breturn = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
+        tablePane = new javax.swing.JScrollPane();
+        tabel = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         editPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -57,10 +88,6 @@ public class AturShiftFrame extends javax.swing.JFrame {
         BsaveEdit = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         LtanggalKerja = new javax.swing.JLabel();
-        tablePane = new javax.swing.JScrollPane();
-        tabel = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
         jLabel10.setText("Enterprise");
@@ -92,20 +119,19 @@ public class AturShiftFrame extends javax.swing.JFrame {
         headerPanel.setLayout(headerPanelLayout);
         headerPanelLayout.setHorizontalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+            .addGroup(headerPanelLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(Breturn, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(557, 557, 557)
                 .addGroup(headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13)
                         .addGap(35, 35, 35))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)))
-                .addGap(60, 60, 60))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         headerPanelLayout.setVerticalGroup(
             headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,6 +148,82 @@ public class AturShiftFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel13)))
                 .addGap(0, 27, Short.MAX_VALUE))
+        );
+
+        tabel.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                { new Integer(1), "Sigma", null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "No", "Nama", "Title 3", "Title 4", "Title 5", "Title 6"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelMouseClicked(evt);
+            }
+        });
+        tablePane.setViewportView(tabel);
+        if (tabel.getColumnModel().getColumnCount() > 0) {
+            tabel.getColumnModel().getColumn(0).setResizable(false);
+            tabel.getColumnModel().getColumn(1).setResizable(false);
+            tabel.getColumnModel().getColumn(2).setResizable(false);
+            tabel.getColumnModel().getColumn(3).setResizable(false);
+            tabel.getColumnModel().getColumn(4).setResizable(false);
+            tabel.getColumnModel().getColumn(5).setResizable(false);
+        }
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 153, 255));
+        jLabel5.setText("Shift");
+        jLabel5.setToolTipText("Enterprise");
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        jLabel9.setText("Atur");
+        jLabel9.setToolTipText("Enterprise");
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         editPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -163,32 +265,30 @@ public class AturShiftFrame extends javax.swing.JFrame {
         editPanelLayout.setHorizontalGroup(
             editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editPanelLayout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(editPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(26, 26, 26)
-                            .addComponent(LnamaKaryawan))
-                        .addGroup(editPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel6)
-                            .addGap(26, 26, 26)
-                            .addComponent(cbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(editPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(26, 26, 26)
+                        .addComponent(cbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(editPanelLayout.createSequentialGroup()
+                        .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel8)
-                            .addGap(26, 26, 26)
-                            .addComponent(LtanggalKerja)))
+                            .addComponent(jLabel4))
+                        .addGap(26, 26, 26)
+                        .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(LnamaKaryawan)
+                            .addComponent(LtanggalKerja, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(editPanelLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jLabel1)))
-                .addGap(63, 63, 63))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(BcancelEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
                 .addComponent(BsaveEdit)
-                .addGap(40, 40, 40))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         editPanelLayout.setVerticalGroup(
             editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,97 +314,26 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 .addGap(27, 27, 27))
         );
 
-        tabel.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                { new Integer(1), "Sigma", "CEO", "Malam"},
-                {null, null, null, null}
-            },
-            new String [] {
-                "No", "Nama", "Jabatan", "Shift Kerja"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelMouseClicked(evt);
-            }
-        });
-        tablePane.setViewportView(tabel);
-        if (tabel.getColumnModel().getColumnCount() > 0) {
-            tabel.getColumnModel().getColumn(0).setResizable(false);
-            tabel.getColumnModel().getColumn(1).setResizable(false);
-            tabel.getColumnModel().getColumn(2).setResizable(false);
-            tabel.getColumnModel().getColumn(3).setResizable(false);
-        }
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 255));
-        jLabel5.setText("Shift");
-        jLabel5.setToolTipText("Enterprise");
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
-        jLabel9.setText("Atur");
-        jLabel9.setToolTipText("Enterprise");
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(editPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(headerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(headerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(editPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, 0))
         );
 
@@ -323,20 +352,52 @@ public class AturShiftFrame extends javax.swing.JFrame {
     private void tabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelMouseClicked
         // TODO add your handling code here:
         int barisTerpilih = tabel.getSelectedRow();
+        int kolomTerpilih = tabel.getSelectedColumn();
         
         if (barisTerpilih != -1){
-            String namaKaryawan = tabel.getValueAt(barisTerpilih, 1).toString();
-            LnamaKaryawan.setText(namaKaryawan);
-            cbShift.removeAllItems();
             
-            cbShift.addItem("Pilih Shift...");
-            cbShift.addItem("Pagi");
-            cbShift.addItem("Malam");
+            Object dataSel = tabel.getValueAt(barisTerpilih,1);
+            
+            if(dataSel == null || dataSel.toString().trim().isEmpty()){
+                LnamaKaryawan.setText("Belum dipilih");
+                cbShift.removeAllItems();
+                cbShift.addItem("Belum dipilih");
+            }else{
+                String namaKaryawan = dataSel.toString();
+                LnamaKaryawan.setText(namaKaryawan);
+                cbShift.removeAllItems();
+
+                cbShift.addItem("Pilih Shift...");
+                cbShift.addItem("Pagi");
+                cbShift.addItem("Malam");
+                
+                if(kolomTerpilih > 1){
+                LocalDate tanggalHitung = LocalDate.now();
+                int tambahHari = 0;
+                
+                for (int i = 2; 1<= kolomTerpilih; i++){
+                    LocalDate cekTanggal = LocalDate.now().plusDays(tambahHari);
+                    
+                    tanggalHitung = LocalDate.now().plusDays(tambahHari);
+                    tambahHari++;
+                }
+                
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMMM yyyy", new java.util.Locale("id"));
+                LtanggalKerja.setText(tanggalHitung.format(formatter));
+                
+                
+                }else{
+                    LtanggalKerja.setText("Belum dipilih");
+                }
         }
+            }
+            
+        
     }//GEN-LAST:event_tabelMouseClicked
 
     private void BsaveEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BsaveEditActionPerformed
         // TODO add your handling code here:
+        int kolomTerpilih = tabel.getSelectedColumn();
         if (LnamaKaryawan.getText() == "Belum dipilih"){
             JOptionPane.showMessageDialog(this, "Pilih karyawan dulu","Info",JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -345,7 +406,12 @@ public class AturShiftFrame extends javax.swing.JFrame {
             String shiftKerja = cbShift.getSelectedItem().toString();
             
             DefaultTableModel tabelModel = (DefaultTableModel) tabel.getModel();
-            tabelModel.setValueAt(shiftKerja, barisTerpilih, 3);
+            if(kolomTerpilih < 2){
+                JOptionPane.showMessageDialog(this, "Harus di isi kolom Hari!","Info",JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                tabelModel.setValueAt(shiftKerja, barisTerpilih, kolomTerpilih);
+            }
+            
             
         }
     }//GEN-LAST:event_BsaveEditActionPerformed
