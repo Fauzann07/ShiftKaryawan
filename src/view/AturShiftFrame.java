@@ -372,20 +372,18 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 cbShift.addItem("Malam");
                 
                 if(kolomTerpilih > 1){
-                LocalDate tanggalHitung = LocalDate.now();
-                int tambahHari = 0;
-                
-                for (int i = 2; 1<= kolomTerpilih; i++){
-                    LocalDate cekTanggal = LocalDate.now().plusDays(tambahHari);
                     
-                    tanggalHitung = LocalDate.now().plusDays(tambahHari);
-                    tambahHari++;
+                Object cekNama = tabel.getValueAt(barisTerpilih, 1);
+                
+                if (cekNama == null || cekNama.toString().trim().isEmpty()){
+                    LtanggalKerja.setText("Belum dipilih");
+                }else{
+                    int selisihHari = kolomTerpilih - 2;
+                    LocalDate tanggalTarget = LocalDate.now().plusDays(selisihHari);
+                    
+                    java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd MMMM yyyy", new java.util.Locale("id"));
+                    LtanggalKerja.setText(tanggalTarget.format(formatter));
                 }
-                
-                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMMM yyyy", new java.util.Locale("id"));
-                LtanggalKerja.setText(tanggalHitung.format(formatter));
-                
-                
                 }else{
                     LtanggalKerja.setText("Belum dipilih");
                 }
