@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
+package view;
 
 import view.MainMenuFrame;
 
@@ -48,8 +48,29 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
     
     public LaporanKehadiranFrame() {
         initComponents();
+        loadDataKehadiran(utils.DateHelper.getBulanSekarang(), utils.DateHelper.getTahunSekarang());
+        jComboBox1.setSelectedIndex(utils.DateHelper.getBulanSekarang() - 1);
+        jComboBox1.addActionListener(e -> {
+            int bulan = jComboBox1.getSelectedIndex() + 1;
+            loadDataKehadiran(bulan, utils.DateHelper.getTahunSekarang());
+        });
+    }
+
+    private void loadDataKehadiran(int bulan, int tahun) {
+        DefaultTableModel tabelModel = (DefaultTableModel) tabel.getModel();
+        tabelModel.setRowCount(0);
+        dao.KehadiranDAO dao = new dao.KehadiranDAO();
+        java.util.List<model.Kehadiran> list = dao.getByBulan(bulan, tahun);
+        int no = 1;
+        for (model.Kehadiran kh : list) {
+            tabelModel.addRow(new Object[]{
+                no++, kh.getNamaKaryawan(), kh.getJabatan(),
+                kh.getHadir(), kh.getSakit(), kh.getCuti(),
+                kh.getIzin(), kh.getAlpa(), kh.getTelat(),
+                kh.getKinerja()
+            });
+        }
         updateTabel();
-        
     }
 
     /**

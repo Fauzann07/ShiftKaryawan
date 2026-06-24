@@ -16,6 +16,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
      */
     public MainMenuFrame() {
         initComponents();
+        // Tambah listener untuk tombol yang belum ada
+        button4.addActionListener(this::button4ActionPerformed);
+        button6.addActionListener(this::button6ActionPerformed);
+        // Tampilkan nama user yang login
+        if (utils.Session.isLoggedIn()) {
+            jLabel5.setText("Selamat Datang, " + utils.Session.getCurrentUsername() + "!");
+        }
     }
 
     /**
@@ -207,6 +214,20 @@ public class MainMenuFrame extends javax.swing.JFrame {
         dashboard.setVisible(true);
         dashboard.setLocationRelativeTo(null);
     }//GEN-LAST:event_btndashboardActionPerformed
+
+    private void button4ActionPerformed(java.awt.event.ActionEvent evt) {
+        dispose();
+        AturShiftFrame atur = new AturShiftFrame();
+        atur.setVisible(true);
+        atur.setLocationRelativeTo(null);
+    }
+
+    private void button6ActionPerformed(java.awt.event.ActionEvent evt) {
+        dispose();
+        LaporanKehadiranFrame laporan = new LaporanKehadiranFrame();
+        laporan.setVisible(true);
+        laporan.setLocationRelativeTo(null);
+    }
 
     /**
      * @param args the command line arguments

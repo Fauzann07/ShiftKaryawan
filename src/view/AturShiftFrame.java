@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package pemrogramanberbasisobjek.ShiftKaryawan.src.view;
+package view;
 
 import javax.swing.*;
 import view.MainMenuFrame;
@@ -18,6 +18,7 @@ import java.util.*;
 public class AturShiftFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AturShiftFrame.class.getName());
+    private final java.util.ArrayList<Integer> karyawanIds = new java.util.ArrayList<>();
 
     /**
      * Creates new form AturShiftFrame
@@ -45,16 +46,57 @@ public class AturShiftFrame extends javax.swing.JFrame {
         tabel.getTableHeader().repaint();
     }
     
+    private java.time.LocalDate getTanggalDariKolom(int kolom) {
+        java.time.LocalDate hariIni = java.time.LocalDate.now();
+        int skip = 0;
+        for (int i = 2; i <= kolom; i++) {
+            java.time.LocalDate tanggalKolom = hariIni.plusDays(skip);
+            if (tanggalKolom.getDayOfWeek() == java.time.DayOfWeek.SUNDAY) {
+                skip++;
+                tanggalKolom = hariIni.plusDays(skip);
+            }
+            if (i == kolom) return tanggalKolom;
+            skip++;
+        }
+        return hariIni;
+    }
+
     public AturShiftFrame() {
         initComponents();
         setKolomHari();
-        
         cbShift.removeAllItems();
-        
-//        tabel.getColumnModel().getColumn(0).setPreferredWidth(15);
-//        tabel.getColumnModel().getColumn(1).setPreferredWidth(50);
-//        tabel.getColumnModel().getColumn(2).setPreferredWidth(25);
-//        tabel.getColumnModel().getColumn(3).setPreferredWidth(25);
+        loadKaryawanKeTable();
+    }
+
+    private void loadKaryawanKeTable() {
+        javax.swing.table.DefaultTableModel tabelModel = (javax.swing.table.DefaultTableModel) tabel.getModel();
+        tabelModel.setRowCount(0);
+        karyawanIds.clear();
+        int totalKolom = tabelModel.getColumnCount();
+        dao.ShiftDAO shiftDAO = new dao.ShiftDAO();
+        try {
+            dao.karyawanDAO dao = new dao.karyawanDAO();
+            java.sql.ResultSet rs = dao.getAllForShift();
+            int no = 1;
+            while (rs.next()) {
+                int idKaryawan = rs.getInt("id");
+                karyawanIds.add(idKaryawan);
+                Object[] row = new Object[totalKolom];
+                row[0] = no++;
+                row[1] = rs.getString("nama");
+                
+                // Realtime sync: isi kolom shift dari database
+                for (int i = 2; i < totalKolom; i++) {
+                    String tgl = getTanggalDariKolom(i).toString();
+                    String shiftDb = shiftDAO.getShift(idKaryawan, tgl);
+                    row[i] = shiftDb;
+                }
+                
+                tabelModel.addRow(row);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -369,13 +411,12 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 LnamaKaryawan.setText(namaKaryawan);
                 cbShift.removeAllItems();
 
-                cbShift.addItem("Pilih Shift...");
+                cbShift.addItem("Pilih Shift!");
                 cbShift.addItem("Pagi");
                 cbShift.addItem("Malam");
                 
                 if(kolomTerpilih > 1){
-                int selisihHari = kolomTerpilih - 2;
-                LocalDate tanggalTarget = LocalDate.now().plusDays(selisihHari);
+                java.time.LocalDate tanggalTarget = getTanggalDariKolom(kolomTerpilih);
                     
                 java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd MMMM yyyy", new java.util.Locale("id"));
                 LtanggalKerja.setText(tanggalTarget.format(formatter));
@@ -390,23 +431,33 @@ public class AturShiftFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelMouseClicked
 
     private void BsaveEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BsaveEditActionPerformed
-        // TODO add your handling code here:
         int kolomTerpilih = tabel.getSelectedColumn();
-        if (LnamaKaryawan.getText() == "Belum dipilih"){
+        if ("Belum dipilih".equals(LnamaKaryawan.getText())){
             JOptionPane.showMessageDialog(this, "Pilih karyawan dulu","Info",JOptionPane.INFORMATION_MESSAGE);
             return;
-        }else{
-            int barisTerpilih = tabel.getSelectedRow();
-            String shiftKerja = cbShift.getSelectedItem().toString();
-            
-            DefaultTableModel tabelModel = (DefaultTableModel) tabel.getModel();
-            if(kolomTerpilih < 2){
-                JOptionPane.showMessageDialog(this, "Harus di isi kolom Hari!","Info",JOptionPane.INFORMATION_MESSAGE);
-            }else{
-                tabelModel.setValueAt(shiftKerja, barisTerpilih, kolomTerpilih);
+        }
+        int barisTerpilih = tabel.getSelectedRow();
+        String shiftKerja = cbShift.getSelectedItem().toString();
+        if ("Pilih Shift!".equals(shiftKerja)) {
+            JOptionPane.showMessageDialog(this, "Pilih tipe shift!","Info",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        DefaultTableModel tabelModel = (DefaultTableModel) tabel.getModel();
+        if(kolomTerpilih < 2){
+            JOptionPane.showMessageDialog(this, "Harus di isi kolom Hari!","Info",JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            tabelModel.setValueAt(shiftKerja, barisTerpilih, kolomTerpilih);
+            // Simpan ke database
+            if (barisTerpilih >= 0 && barisTerpilih < karyawanIds.size()) {
+                int karyawanId = karyawanIds.get(barisTerpilih);
+                String tanggal = getTanggalDariKolom(kolomTerpilih).toString(); // Format YYYY-MM-DD
+                dao.ShiftDAO shiftDAO = new dao.ShiftDAO();
+                if (shiftDAO.simpanShift(karyawanId, tanggal, shiftKerja)) {
+                    JOptionPane.showMessageDialog(this, "Shift berhasil disimpan!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Gagal menyimpan shift!");
+                }
             }
-            
-            
         }
     }//GEN-LAST:event_BsaveEditActionPerformed
 

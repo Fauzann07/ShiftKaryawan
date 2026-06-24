@@ -141,51 +141,20 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
- /* TODO add your handling code here:
-        
-        */
- try {
+        controller.LoginController loginCtrl = new controller.LoginController();
 
-    java.sql.Connection conn =
-            database.DBConnection.getConnection();
+        String username = txtUsername.getText();
+        String password = String.valueOf(txtPassword.getPassword());
 
-    String sql =
-            "SELECT * FROM users WHERE username=? AND password=?";
-
-    java.sql.PreparedStatement pst =
-            conn.prepareStatement(sql);
-
-    pst.setString(1, txtUsername.getText());
-    pst.setString(2,
-            String.valueOf(txtPassword.getPassword()));
-
-    java.sql.ResultSet rs =
-            pst.executeQuery();
-
-    if (rs.next()) {
-
-        MainMenuFrame menu =
-                new MainMenuFrame();
-
-        menu.setLocationRelativeTo(null);
-        menu.setVisible(true);
-
-        dispose();
-
-    } else {
-
-        javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "Username atau Password Salah!"
-        );
-
-    }
-
-} catch (Exception e) {
-
-    e.printStackTrace();
-
-}
+        if (loginCtrl.login(username, password)) {
+            MainMenuFrame menu = new MainMenuFrame();
+            menu.setLocationRelativeTo(null);
+            menu.setVisible(true);
+            dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(
+                    this, "Username atau Password Salah!");
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed

@@ -136,20 +136,17 @@ public class KelolaKaryawan extends javax.swing.JFrame {
      */
     public KelolaKaryawan() {
         initComponents();
-        loadDataKaryawan();
         panelList.setLayout(
-        new javax.swing.BoxLayout(
-            panelList,
-            javax.swing.BoxLayout.Y_AXIS
-        )
-    );
+            new javax.swing.BoxLayout(
+                panelList,
+                javax.swing.BoxLayout.Y_AXIS
+            )
+        );
 
-    loadDataKaryawan();
-        
         jComboBox1.addItem("Laki-laki");
         jComboBox1.addItem("Perempuan");
-        
-        
+
+        loadDataKaryawan();
     }
 
     /**

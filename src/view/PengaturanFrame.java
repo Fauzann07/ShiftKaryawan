@@ -215,7 +215,27 @@ public class PengaturanFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPasswordField3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        String oldPass = String.valueOf(jPasswordField3.getPassword());
+        String newPass = String.valueOf(jPasswordField1.getPassword());
+        String konfirm = String.valueOf(jPasswordField2.getPassword());
+
+        if (oldPass.isEmpty() || newPass.isEmpty() || konfirm.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Semua field harus diisi!");
+            return;
+        }
+        if (!newPass.equals(konfirm)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Password baru dan konfirmasi tidak cocok!");
+            return;
+        }
+        controller.LoginController ctrl = new controller.LoginController();
+        if (ctrl.gantiPassword(oldPass, newPass)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Password berhasil diubah!");
+            jPasswordField1.setText("");
+            jPasswordField2.setText("");
+            jPasswordField3.setText("");
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Password lama salah!");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

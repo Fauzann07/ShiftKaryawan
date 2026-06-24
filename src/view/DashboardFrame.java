@@ -4,11 +4,9 @@
  */
 package view;
 
-import pemrogramanberbasisobjek.ShiftKaryawan.src.view.AturShiftFrame;
-import pemrogramanberbasisobjek.ShiftKaryawan.src.view.LaporanKehadiranFrame;
 import javax.swing.table.DefaultTableModel;
 import dao.ShiftDAO;
-import model.karyawan;
+import dao.DashboardDAO;
 import java.util.List;
 import model.Shift;
 
@@ -21,38 +19,11 @@ import model.Shift;
 public class DashboardFrame extends javax.swing.JFrame {
     
     private void updateCardStats() {
-
-        int total = model.getRowCount();
-
-        int pagi = 0;
-        int siang = 0;
-        int malam = 0;
-        int bekerja = 0;
-
-        for (int i = 0; i < model.getRowCount(); i++) {
-
-            String shift = model.getValueAt(i, 2).toString(); // Jabatan atau shift (tergantung data kamu)
-            String status = model.getValueAt(i, 5).toString();
-
-            // contoh logic SHIFT (sementara pakai jabatan/shift dummy)
-            if (shift.equalsIgnoreCase("Admin")) {
-                pagi++;
-            } else if (shift.equalsIgnoreCase("Kasir")) {
-                siang++;
-            } else {
-                malam++;
-            }
-
-            if (status.equalsIgnoreCase("Aktif")) {
-                bekerja++;
-            }
-        }
-
-        LtotalKaryawan1.setText(String.valueOf(total));
-        LsudahAbsen.setText(String.valueOf(pagi));
-        LtotalTelat.setText(String.valueOf(siang));
-        LtotalTelat1.setText(String.valueOf(malam));
-        LtotalTelat3.setText(String.valueOf(bekerja));
+        DashboardDAO dashDAO = new DashboardDAO();
+        LtotalKaryawan1.setText(String.valueOf(dashDAO.getTotalKaryawan()));
+        LsudahAbsen.setText(String.valueOf(dashDAO.getShiftPagiHariIni()));
+        LtotalTelat1.setText(String.valueOf(dashDAO.getShiftMalamHariIni()));
+        LtotalTelat3.setText(String.valueOf(dashDAO.getSedangBekerja()));
     }
     
     private void loadData() {
@@ -118,10 +89,6 @@ public class DashboardFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         LtotalKaryawan1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        LtotalTelat = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         LtotalTelat1 = new javax.swing.JLabel();
@@ -166,8 +133,8 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addComponent(jLabel14)
                 .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(btnKembali)
+                .addGap(19, 19, 19)
+                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -181,7 +148,7 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addGroup(headerPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel3)
-                    .addComponent(btnKembali))
+                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel14)
                 .addContainerGap(13, Short.MAX_VALUE))
@@ -217,7 +184,7 @@ public class DashboardFrame extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                         .addGap(14, 14, 14))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -275,49 +242,6 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(0, 153, 255));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Shitf Siang");
-
-        LtotalTelat.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        LtotalTelat.setForeground(new java.awt.Color(255, 255, 255));
-        LtotalTelat.setText("0");
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Orang");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(LtotalTelat, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(14, 14, 14))))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LtotalTelat)
-                    .addComponent(jLabel9))
-                .addContainerGap(11, Short.MAX_VALUE))
-        );
-
         jPanel5.setBackground(new java.awt.Color(0, 153, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -346,7 +270,7 @@ public class DashboardFrame extends javax.swing.JFrame {
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                         .addGap(14, 14, 14))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -478,8 +402,6 @@ public class DashboardFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -492,7 +414,6 @@ public class DashboardFrame extends javax.swing.JFrame {
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -507,7 +428,7 @@ public class DashboardFrame extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(btnAturShift, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLaporanKehadiran, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -605,7 +526,6 @@ public class DashboardFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LsudahAbsen;
     private javax.swing.JLabel LtotalKaryawan1;
-    private javax.swing.JLabel LtotalTelat;
     private javax.swing.JLabel LtotalTelat1;
     private javax.swing.JLabel LtotalTelat3;
     private javax.swing.JButton btnAturShift;
@@ -626,12 +546,9 @@ public class DashboardFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
