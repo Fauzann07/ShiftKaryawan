@@ -4,7 +4,7 @@
  */
 package ShiftKaryawan.main;
 import javax.swing.SwingUtilities;
-import view.LoginFrame;
+import view.SplashScreen;
 import database.DBConnection;
 /**
  *
@@ -14,9 +14,8 @@ public class Main {
 public static void main(String[] args) {
     DBConnection.getConnection();
     SwingUtilities.invokeLater(() -> {
-        LoginFrame login = new LoginFrame();
-        login.setVisible(true);
-        login.setLocationRelativeTo(null);
+        SplashScreen splash = new SplashScreen();
+        splash.showSplash();
     });
 }
 }

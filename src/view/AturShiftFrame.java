@@ -66,6 +66,45 @@ public class AturShiftFrame extends javax.swing.JFrame {
         setKolomHari();
         cbShift.removeAllItems();
         loadKaryawanKeTable();
+        
+        // Center-align kolom No dan kolom hari
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tabel.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        for (int i = 2; i < tabel.getColumnCount(); i++) {
+            tabel.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+        
+        addPintasanCepat();
+    }
+
+    private void addPintasanCepat() {
+        javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu navMenu = new javax.swing.JMenu("Pintasan Cepat");
+        
+        javax.swing.JMenuItem menuDashboard = new javax.swing.JMenuItem("Dashboard");
+        menuDashboard.addActionListener(e -> {
+            dispose();
+            new DashboardFrame().setVisible(true);
+        });
+        navMenu.add(menuDashboard);
+
+        javax.swing.JMenuItem menuKelola = new javax.swing.JMenuItem("Kelola Karyawan");
+        menuKelola.addActionListener(e -> {
+            dispose();
+            new KelolaKaryawan().setVisible(true);
+        });
+        navMenu.add(menuKelola);
+
+        javax.swing.JMenuItem menuLaporan = new javax.swing.JMenuItem("Laporan Kehadiran");
+        menuLaporan.addActionListener(e -> {
+            dispose();
+            new LaporanKehadiranFrame().setVisible(true);
+        });
+        navMenu.add(menuLaporan);
+
+        menuBar.add(navMenu);
+        setJMenuBar(menuBar);
     }
 
     private void loadKaryawanKeTable() {
@@ -265,7 +304,7 @@ public class AturShiftFrame extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 49, Short.MAX_VALUE))
         );
 
         editPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -307,29 +346,30 @@ public class AturShiftFrame extends javax.swing.JFrame {
         editPanelLayout.setHorizontalGroup(
             editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(editPanelLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
                 .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(editPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(26, 26, 26)
-                        .addComponent(cbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(editPanelLayout.createSequentialGroup()
-                        .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel4))
-                        .addGap(26, 26, 26)
+                        .addGap(43, 43, 43)
                         .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LnamaKaryawan)
-                            .addComponent(LtanggalKerja, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(editPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(26, 26, 26)
+                                .addComponent(cbShift, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(editPanelLayout.createSequentialGroup()
+                                .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel4))
+                                .addGap(26, 26, 26)
+                                .addGroup(editPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LnamaKaryawan)
+                                    .addComponent(LtanggalKerja, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(editPanelLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(jLabel1))))
                     .addGroup(editPanelLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, editPanelLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(BcancelEdit)
-                .addGap(37, 37, 37)
-                .addComponent(BsaveEdit)
+                        .addGap(46, 46, 46)
+                        .addComponent(BcancelEdit)
+                        .addGap(37, 37, 37)
+                        .addComponent(BsaveEdit)))
                 .addContainerGap(49, Short.MAX_VALUE))
         );
         editPanelLayout.setVerticalGroup(
@@ -374,9 +414,9 @@ public class AturShiftFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(editPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, 0))
+                        .addGap(18, 18, 18)
+                        .addComponent(editPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();

@@ -147,6 +147,36 @@ public class KelolaKaryawan extends javax.swing.JFrame {
         jComboBox1.addItem("Perempuan");
 
         loadDataKaryawan();
+        addPintasanCepat();
+    }
+
+    private void addPintasanCepat() {
+        javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu navMenu = new javax.swing.JMenu("Pintasan Cepat");
+        
+        javax.swing.JMenuItem menuDashboard = new javax.swing.JMenuItem("Dashboard");
+        menuDashboard.addActionListener(e -> {
+            dispose();
+            new DashboardFrame().setVisible(true);
+        });
+        navMenu.add(menuDashboard);
+
+        javax.swing.JMenuItem menuAturShift = new javax.swing.JMenuItem("Atur Shift");
+        menuAturShift.addActionListener(e -> {
+            dispose();
+            new AturShiftFrame().setVisible(true);
+        });
+        navMenu.add(menuAturShift);
+
+        javax.swing.JMenuItem menuLaporan = new javax.swing.JMenuItem("Laporan Kehadiran");
+        menuLaporan.addActionListener(e -> {
+            dispose();
+            new LaporanKehadiranFrame().setVisible(true);
+        });
+        navMenu.add(menuLaporan);
+
+        menuBar.add(navMenu);
+        setJMenuBar(menuBar);
     }
 
     /**
@@ -606,24 +636,62 @@ public class KelolaKaryawan extends javax.swing.JFrame {
 
         while (rs.next()) {
 
+            final int id = rs.getInt("id");
+            final String nama = rs.getString("nama");
+            final String jabatan = rs.getString("jabatan");
+            final String jk = rs.getString("jenis_kelamin");
+            final String hp = rs.getString("no_hp");
+            final String alamat = rs.getString("alamat");
+
             javax.swing.JPanel card =
                     new javax.swing.JPanel();
+
+            card.setPreferredSize(
+                new java.awt.Dimension(320, 120));
+            card.setMaximumSize(
+                new java.awt.Dimension(
+                        Integer.MAX_VALUE, 120));
+            card.setBackground(java.awt.Color.WHITE);
+            card.setBorder(
+                javax.swing.BorderFactory.createLineBorder(
+                    new java.awt.Color(46, 135, 246), 2));
 
             javax.swing.JLabel lbl =
                     new javax.swing.JLabel(
                             "<html>"
-                            + "<b>ID :</b> "
-                            + rs.getInt("id")
+                            + "<b>ID :</b> " + id
                             + "<br>"
-                            + "<b>Nama :</b> "
-                            + rs.getString("nama")
+                            + "<b>Nama :</b> " + nama
                             + "<br>"
-                            + "<b>Jabatan :</b> "
-                            + rs.getString("jabatan")
+                            + "<b>Jabatan :</b> " + jabatan
+                            + "<br>"
+                            + "<b>Jenis Kelamin :</b> " + jk
+                            + "<br>"
+                            + "<b>No HP :</b> " + hp
+                            + "<br>"
+                            + "<b>Alamat :</b> " + alamat
                             + "</html>"
                     );
 
             card.add(lbl);
+
+            // Klik card untuk isi form edit
+            card.addMouseListener(
+                    new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(
+                        java.awt.event.MouseEvent e) {
+                    selectedId = id;
+                    jTextField1.setText(nama);
+                    jTextField2.setText(jabatan);
+                    jComboBox1.setSelectedItem(jk);
+                    jTextField3.setText(hp);
+                    jTextField4.setText(alamat);
+
+                    card.setBackground(
+                            new java.awt.Color(220, 240, 255));
+                }
+            });
 
             panelList.add(card);
         }

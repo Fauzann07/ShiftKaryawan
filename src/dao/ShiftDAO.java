@@ -123,4 +123,55 @@ public class ShiftDAO {
         }
         return list;
     }
+
+    /**
+     * Ambil data shift hari ini beserta ID shift untuk keperluan edit di Dashboard.
+     */
+    public List<Shift> getAllKaryawanHariIniWithId() {
+        List<Shift> list = new ArrayList<>();
+        String sql = """
+                     SELECT s.id, k.nama, k.jabatan, s.jam_masuk, s.jam_keluar, s.status
+                     FROM shift s
+                     JOIN karyawan k ON s.karyawan_id = k.id
+                     WHERE s.tanggal = CURRENT_DATE
+                     ORDER BY k.nama
+                     """;
+        try (Connection conn = DBConnection.getConnection();
+             Statement st = conn.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next()) {
+                Shift s = new Shift();
+                s.setId(rs.getInt("id"));
+                s.setNama(rs.getString("nama"));
+                s.setJabatan(rs.getString("jabatan"));
+                s.setJamMasuk(rs.getString("jam_masuk"));
+                s.setJamKeluar(rs.getString("jam_keluar"));
+                s.setStatus(rs.getString("status"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * Update status shift (jam masuk, jam keluar, status) dari Dashboard.
+     */
+    public boolean updateStatusShift(int shiftId, String jamMasuk, String jamKeluar, String status) {
+        String sql = "UPDATE shift SET jam_masuk=?, jam_keluar=?, status=? WHERE id=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, jamMasuk);
+            ps.setString(2, jamKeluar);
+            ps.setString(3, status);
+            ps.setInt(4, shiftId);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+

@@ -29,12 +29,14 @@ public class DashboardFrame extends javax.swing.JFrame {
     private void loadData() {
 
         model.setRowCount(0);
+        shiftIds.clear();
 
         ShiftDAO dao = new ShiftDAO();
-        List<Shift> list = dao.getAllKaryawanHariIni();
+        List<Shift> list = dao.getAllKaryawanHariIniWithId();
 
         int no = 1;
         for (Shift k : list) {
+            shiftIds.add(k.getId());
             model.addRow(new Object[]{
                 no++,
                 k.getNama(),
@@ -46,7 +48,119 @@ public class DashboardFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Menampilkan dialog edit shift untuk baris yang dipilih di dashboard.
+     */
+    private void showEditDialog(int row) {
+        if (row < 0 || row >= shiftIds.size()) return;
+
+        int shiftId = shiftIds.get(row);
+        String nama = model.getValueAt(row, 1).toString();
+        String jabatan = model.getValueAt(row, 2).toString();
+        Object jamMasukObj = model.getValueAt(row, 3);
+        Object jamKeluarObj = model.getValueAt(row, 4);
+        Object statusObj = model.getValueAt(row, 5);
+
+        String jamMasuk = jamMasukObj != null ? jamMasukObj.toString() : "";
+        String jamKeluar = jamKeluarObj != null ? jamKeluarObj.toString() : "";
+        String status = statusObj != null ? statusObj.toString() : "";
+
+        // Buat dialog edit
+        javax.swing.JDialog dialog = new javax.swing.JDialog(this, "Edit Status Karyawan", true);
+        dialog.setLayout(new java.awt.GridBagLayout());
+        dialog.getContentPane().setBackground(java.awt.Color.WHITE);
+        java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+        gbc.insets = new java.awt.Insets(8, 10, 8, 10);
+        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
+
+        // Judul
+        javax.swing.JLabel lblTitle = new javax.swing.JLabel("Edit Status Karyawan");
+        lblTitle.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 18));
+        lblTitle.setForeground(new java.awt.Color(0, 153, 255));
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        gbc.anchor = java.awt.GridBagConstraints.CENTER;
+        dialog.add(lblTitle, gbc);
+
+        gbc.gridwidth = 1;
+        gbc.anchor = java.awt.GridBagConstraints.WEST;
+
+        // Nama (read-only)
+        gbc.gridx = 0; gbc.gridy = 1;
+        dialog.add(new javax.swing.JLabel("Nama :"), gbc);
+        javax.swing.JLabel lblNama = new javax.swing.JLabel(nama + " (" + jabatan + ")");
+        lblNama.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+        gbc.gridx = 1;
+        dialog.add(lblNama, gbc);
+
+        // Jam Masuk
+        gbc.gridx = 0; gbc.gridy = 2;
+        dialog.add(new javax.swing.JLabel("Jam Masuk :"), gbc);
+        javax.swing.JTextField txtJamMasuk = new javax.swing.JTextField(jamMasuk, 15);
+        gbc.gridx = 1;
+        dialog.add(txtJamMasuk, gbc);
+
+        // Jam Keluar
+        gbc.gridx = 0; gbc.gridy = 3;
+        dialog.add(new javax.swing.JLabel("Jam Keluar :"), gbc);
+        javax.swing.JTextField txtJamKeluar = new javax.swing.JTextField(jamKeluar, 15);
+        gbc.gridx = 1;
+        dialog.add(txtJamKeluar, gbc);
+
+        // Status
+        gbc.gridx = 0; gbc.gridy = 4;
+        dialog.add(new javax.swing.JLabel("Status :"), gbc);
+        javax.swing.JComboBox<String> cbStatus = new javax.swing.JComboBox<>(
+                new String[]{"Aktif", "Selesai", "Izin", "Sakit", "Alpa"});
+        if (!status.isEmpty()) cbStatus.setSelectedItem(status);
+        gbc.gridx = 1;
+        dialog.add(cbStatus, gbc);
+
+        // Tombol
+        javax.swing.JPanel btnPanel = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 0));
+        btnPanel.setBackground(java.awt.Color.WHITE);
+
+        javax.swing.JButton btnSimpan = new javax.swing.JButton("SIMPAN");
+        btnSimpan.setBackground(new java.awt.Color(60, 213, 60));
+        btnSimpan.setForeground(java.awt.Color.WHITE);
+        btnSimpan.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+
+        javax.swing.JButton btnBatal = new javax.swing.JButton("BATAL");
+        btnBatal.setBackground(new java.awt.Color(249, 70, 70));
+        btnBatal.setForeground(java.awt.Color.WHITE);
+        btnBatal.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+
+        btnSimpan.addActionListener(e -> {
+            ShiftDAO shiftDAO = new ShiftDAO();
+            String newJamMasuk = txtJamMasuk.getText().trim();
+            String newJamKeluar = txtJamKeluar.getText().trim();
+            String newStatus = cbStatus.getSelectedItem().toString();
+
+            if (shiftDAO.updateStatusShift(shiftId, newJamMasuk, newJamKeluar, newStatus)) {
+                javax.swing.JOptionPane.showMessageDialog(dialog, "Data berhasil diupdate!");
+                dialog.dispose();
+                loadData();
+                updateCardStats();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(dialog, "Gagal mengupdate data!");
+            }
+        });
+
+        btnBatal.addActionListener(e -> dialog.dispose());
+
+        btnPanel.add(btnBatal);
+        btnPanel.add(btnSimpan);
+
+        gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2;
+        gbc.anchor = java.awt.GridBagConstraints.CENTER;
+        dialog.add(btnPanel, gbc);
+
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
     private final DefaultTableModel model;
+    private final java.util.ArrayList<Integer> shiftIds = new java.util.ArrayList<>();
     private static final java.util.logging.Logger logger
             = java.util.logging.Logger.getLogger(DashboardFrame.class.getName());
 
@@ -61,6 +175,22 @@ public class DashboardFrame extends javax.swing.JFrame {
         model.addColumn("Jam Masuk");
         model.addColumn("Jam Keluar");
         model.addColumn("Status");
+
+        // Center-align kolom No
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jTable1.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+
+        // Double-click untuk edit
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    int row = jTable1.getSelectedRow();
+                    showEditDialog(row);
+                }
+            }
+        });
 
         loadData();
         updateCardStats();

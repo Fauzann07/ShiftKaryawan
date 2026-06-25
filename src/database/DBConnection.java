@@ -30,13 +30,13 @@ public class DBConnection {
                             USER,
                             PASSWORD);
 
-            System.out.println("Koneksi Berhasil");
+            System.out.println("Koneksi Database Berhasil");
 
             return conn;
 
         } catch (Exception e) {
 
-            System.out.println("Koneksi Gagal");
+            System.out.println("Koneksi Database Gagal");
             e.printStackTrace();
 
             return null;

@@ -54,6 +54,36 @@ public class LaporanKehadiranFrame extends javax.swing.JFrame {
             int bulan = jComboBox1.getSelectedIndex() + 1;
             loadDataKehadiran(bulan, utils.DateHelper.getTahunSekarang());
         });
+        addPintasanCepat();
+    }
+
+    private void addPintasanCepat() {
+        javax.swing.JMenuBar menuBar = new javax.swing.JMenuBar();
+        javax.swing.JMenu navMenu = new javax.swing.JMenu("Pintasan Cepat");
+        
+        javax.swing.JMenuItem menuDashboard = new javax.swing.JMenuItem("Dashboard");
+        menuDashboard.addActionListener(e -> {
+            dispose();
+            new DashboardFrame().setVisible(true);
+        });
+        navMenu.add(menuDashboard);
+
+        javax.swing.JMenuItem menuKelola = new javax.swing.JMenuItem("Kelola Karyawan");
+        menuKelola.addActionListener(e -> {
+            dispose();
+            new KelolaKaryawan().setVisible(true);
+        });
+        navMenu.add(menuKelola);
+
+        javax.swing.JMenuItem menuAturShift = new javax.swing.JMenuItem("Atur Shift");
+        menuAturShift.addActionListener(e -> {
+            dispose();
+            new AturShiftFrame().setVisible(true);
+        });
+        navMenu.add(menuAturShift);
+
+        menuBar.add(navMenu);
+        setJMenuBar(menuBar);
     }
 
     private void loadDataKehadiran(int bulan, int tahun) {

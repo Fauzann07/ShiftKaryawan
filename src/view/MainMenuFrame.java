@@ -181,11 +181,17 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button5ActionPerformed
-        dispose();
-
-        LoginFrame login = new LoginFrame();
-        login.setVisible(true);
-        login.setLocationRelativeTo(null);  // TODO add your handling code here:
+        int konfirmasi = javax.swing.JOptionPane.showConfirmDialog(
+                this,
+                "Apakah anda yakin ingin keluar?",
+                "Konfirmasi Keluar",
+                javax.swing.JOptionPane.YES_NO_OPTION,
+                javax.swing.JOptionPane.QUESTION_MESSAGE);
+        
+        if (konfirmasi == javax.swing.JOptionPane.YES_OPTION) {
+            utils.Session.clear();
+            dispose();
+        }
     }//GEN-LAST:event_button5ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
